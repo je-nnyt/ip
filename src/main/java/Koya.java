@@ -112,7 +112,7 @@ public class Koya {
                 for (int i = 0; i < taskCount; i++) {
                     System.out.println((i + 1) + ". " + " " + list[i].toString());
                 }
-                continue;
+
             } else if (input.startsWith("mark")) {
                 //obtain task number to mark as done
                 int spaceIndex = input.indexOf(" ");
@@ -121,14 +121,28 @@ public class Koya {
                 list[taskIndex].markAsDone();
                 System.out.println("Nice! I've marked this as done:");
                 System.out.println(list[taskIndex].toString());
-                continue;
+
             } else if (input.startsWith("todo")) {
                 String description = input.substring(5);
                 list[taskCount] = new Todo(description); // create todo object and add to list
                 System.out.println("Got it. I've added this task:");
                 System.out.println(list[taskCount].toString());
                 taskCount++;
+                System.out.println("Now you have "+ taskCount +" tasks in the list.");
+
+            } else if (input.startsWith("deadline")){
+                //parse to obtain description and by
+                int dividerPosition= input.indexOf(" /by ");
+                String description = input.substring(9,dividerPosition);
+                String by = input.substring(dividerPosition+5);
+                list[taskCount] = new Deadline(description,by);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(list[taskCount].toString());
+                taskCount++;
+                System.out.println("Now you have "+ taskCount +" tasks in the list.");
+
             }
+
 
         } while (true);
 
