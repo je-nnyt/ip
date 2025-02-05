@@ -13,10 +13,81 @@ class Task {
         return (isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
+    public String getTaskTypeIcon() {
+        return " ";
+    }
+
     public void markAsDone() {
         this.isDone = true;
     }
+
+    public String toString() {
+        return getTaskTypeIcon() + getStatusIcon() + " " + description;
+    }
 }
+
+class Todo extends Task { //DONE
+
+    public Todo(String description) {
+        super(description);
+    }
+
+    @Override
+    public String getTaskTypeIcon() {
+        return "[T]";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}
+
+class Deadline extends Task {
+
+    protected String by;
+
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+    }
+
+    @Override
+    public String getTaskTypeIcon() {
+        return "[D]";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (by: " + by + ")";
+    }
+
+} // input: description /deadline
+
+
+class Event extends Task {
+
+    protected String from;
+    protected String to;
+
+    public Event(String description, String from, String to) {
+        super(description);
+        this.from = from;
+        this.to = to;
+    }
+
+    @Override
+    public String getTaskTypeIcon() {
+        return "[E]";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "(from: " + from + " to: " + to + ")";
+    }
+}
+
 
 public class Koya {
     public static void main(String[] args) {
@@ -39,20 +110,23 @@ public class Koya {
             } else if (input.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.println((i + 1) + ". " + list[i].getStatusIcon() + " " + list[i].description);
+                    System.out.println((i + 1) + ". " + " " + list[i].toString());
                 }
                 continue;
             } else if (input.startsWith("mark")) {
+                //obtain task number to mark as done
                 int spaceIndex = input.indexOf(" ");
                 int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
 
                 list[taskIndex].markAsDone();
                 System.out.println("Nice! I've marked this as done:");
-                System.out.println(list[taskIndex].getStatusIcon() + " " + list[taskIndex].description);
+                System.out.println(list[taskIndex].toString());
                 continue;
-            } else {
-                list[taskCount] = new Task(input);
-                System.out.println("added: " + list[taskCount].description);
+            } else if (input.startsWith("todo")) {
+                String description = input.substring(5);
+                list[taskCount] = new Todo(description); // create todo object and add to list
+                System.out.println("Got it. I've added this task:");
+                System.out.println(list[taskCount].toString());
                 taskCount++;
             }
 
@@ -62,3 +136,9 @@ public class Koya {
     }
 }
 
+
+// brainstorm
+//create todo, deadline, event class from inheritance
+// add if starts with todo, deadline, event,
+// add status icon for type of task
+//create object
