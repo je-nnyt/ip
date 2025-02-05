@@ -84,7 +84,7 @@ class Event extends Task {
     @Override
     public String toString() {
         return super.toString() +
-                "(from: " + from + " to: " + to + ")";
+                " (from: " + from + " to: " + to + ")";
     }
 }
 
@@ -141,6 +141,20 @@ public class Koya {
                 taskCount++;
                 System.out.println("Now you have "+ taskCount +" tasks in the list.");
 
+            } else if (input.startsWith("event")){
+                //parsing index to obtain description, from, to
+                int fromDividerPosition = input.indexOf(" /from ");
+                int toDividerPosition = input.indexOf(" /to ");
+
+                String description = input.substring(6,fromDividerPosition);
+                String from = input.substring(fromDividerPosition+7,toDividerPosition);
+                String to = input.substring(toDividerPosition+5);
+
+                list[taskCount] = new Event(description,from,to);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(list[taskCount].toString());
+                taskCount++;
+                System.out.println("Now you have "+ taskCount +" tasks in the list.");
             }
 
 
