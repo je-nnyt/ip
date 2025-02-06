@@ -1,93 +1,9 @@
 import java.util.Scanner;
 
-class Task {
-    protected String description;
-    protected boolean isDone;
-
-    public Task(String description) {
-        this.description = description;
-        this.isDone = false;
-    }
-
-    public String getStatusIcon() {
-        return (isDone ? "[X]" : "[ ]"); // mark done task with X
-    }
-
-    public String getTaskTypeIcon() {
-        return " ";//leave empty, overridden by subclass
-    }
-
-    public void markAsDone() {
-        this.isDone = true;
-    }
-
-    public String toString() {
-        return getTaskTypeIcon() + getStatusIcon() + " " + description;
-    }
-}
-
-class Todo extends Task {
-
-    public Todo(String description) {
-        super(description);
-    }
-
-    @Override
-    public String getTaskTypeIcon() {
-        return "[T]";
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-}
-
-class Deadline extends Task {
-
-    protected String by;
-
-    public Deadline(String description, String by) {
-        super(description);
-        this.by = by;
-    }
-
-    @Override
-    public String getTaskTypeIcon() {
-        return "[D]";
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " (by: " + by + ")";
-    }
-
-}
-
-
-class Event extends Task {
-
-    protected String from;
-    protected String to;
-
-    public Event(String description, String from, String to) {
-        super(description);
-        this.from = from;
-        this.to = to;
-    }
-
-    @Override
-    public String getTaskTypeIcon() {
-        return "[E]";
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() +
-                " (from: " + from + " to: " + to + ")";
-    }
-}
-
+import ip.task.Deadline;
+import ip.task.Event;
+import ip.task.Task;
+import ip.task.ToDo;
 
 public class Koya {
 
@@ -98,8 +14,8 @@ public class Koya {
     public static void main(String[] args) {
 
         System.out.println("Hello! I'm Koya");
-        String input;
 
+        String input;
         Scanner in = new Scanner(System.in);
         System.out.println("What can I do for you?");
 
@@ -124,7 +40,7 @@ public class Koya {
             } else if (input.startsWith("todo")) {
                 String description = input.substring(5);
 
-                list[taskCount] = new Todo(description);
+                list[taskCount] = new ToDo(description);
                 confirmAddTask(list);
 
             } else if (input.startsWith("deadline")) {
