@@ -1,10 +1,11 @@
+package koya;
+
 import java.util.Scanner;
 
-import ip.task.Deadline;
-import ip.task.Event;
-import ip.task.KoyaException;
-import ip.task.Task;
-import ip.task.ToDo;
+import koya.task.Deadline;
+import koya.task.Event;
+import koya.task.Task;
+import koya.task.ToDo;
 
 public class Koya {
 

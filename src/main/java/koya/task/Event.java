@@ -1,4 +1,4 @@
-package ip.task;
+package koya.task;
 
 public class Event extends Task {
 

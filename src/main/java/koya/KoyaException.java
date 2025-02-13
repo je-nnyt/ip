@@ -1,4 +1,4 @@
-package ip.task;
+package koya;
 
 public class KoyaException extends Exception {
     public KoyaException (String message){
