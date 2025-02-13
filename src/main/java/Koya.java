@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import ip.task.Deadline;
 import ip.task.Event;
+import ip.task.KoyaException;
 import ip.task.Task;
 import ip.task.ToDo;
 
@@ -10,6 +11,8 @@ public class Koya {
     private static int taskCount = 0;
     private static final int MAX_TASKS = 100;
     private static Task[] list = new Task[MAX_TASKS];
+    private static final int TODO_CHAR_COUNT = 5;
+
 
     public static void main(String[] args) {
 
@@ -18,52 +21,63 @@ public class Koya {
         printIntroMessage();
 
         while (true) {
-            input = in.nextLine();
+            try {
+                input = in.nextLine();
 
-            if (input.equals("bye")) {
-                break;
-            } else if (input.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                listTasks(list);
+                if (input.equals("bye")) {
+                    break;
+                } else if (input.equals("list")) {
+                    System.out.println("Here are the tasks in your list:");
+                    listTasks(list);
 
-            } else if (input.startsWith("mark")) {
-                //indexes to obtain number next to mark
-                int spaceIndex = input.indexOf(" ");
-                int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
-                //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
+                } else if (input.startsWith("mark")) {
+                    //indexes to obtain number next to mark
+                    int spaceIndex = input.indexOf(" ");
+                    int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
+                    //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
 
-                list[taskIndex].markAsDone();
-                confirmMarkDone(list[taskIndex]);
+                    list[taskIndex].markAsDone();
+                    confirmMarkDone(list[taskIndex]);
 
-            } else if (input.startsWith("todo")) {
-                String description = input.substring(5);
+                } else if (input.startsWith("todo")) {
 
-                list[taskCount] = new ToDo(description);
-                confirmAddTask(list);
+                    if (input.length() <= TODO_CHAR_COUNT) {
+                        throw new KoyaException("OOH OH! The description of a todo cannot be left empty...");
+                    }
 
-            } else if (input.startsWith("deadline")) {
-                //Parsing index to obtain description and by
-                int dividerPosition = input.indexOf(" /by ");
+                    String description = input.substring(5);
+                    list[taskCount] = new ToDo(description);
+                    confirmAddTask(list);
 
-                String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
-                String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
+                } else if (input.startsWith("deadline")) {
 
-                list[taskCount] = new Deadline(description, by);
-                confirmAddTask(list);
+                    //Parsing index to obtain description and by
+                    int dividerPosition = input.indexOf(" /by ");
 
-            } else if (input.startsWith("event")) {
-                //index to obtain description, from and to
-                int fromDividerPosition = input.indexOf(" /from ");
-                int toDividerPosition = input.indexOf(" /to ");
+                    String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
+                    String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
-                String description = input.substring(6, fromDividerPosition);
-                String from = input.substring(fromDividerPosition + 7, toDividerPosition);
-                String to = input.substring(toDividerPosition + 5);
+                    list[taskCount] = new Deadline(description, by);
+                    confirmAddTask(list);
 
-                list[taskCount] = new Event(description, from, to);
-                confirmAddTask(list);
-            } else {
-                System.out.println("Action unsupported. Try again.");
+                } else if (input.startsWith("event")) {
+                    //index to obtain description, from and to
+                    int fromDividerPosition = input.indexOf(" /from ");
+                    int toDividerPosition = input.indexOf(" /to ");
+
+                    String description = input.substring(6, fromDividerPosition);
+                    String from = input.substring(fromDividerPosition + 7, toDividerPosition);
+                    String to = input.substring(toDividerPosition + 5);
+
+                    list[taskCount] = new Event(description, from, to);
+                    confirmAddTask(list);
+                } else {
+                    throw new KoyaException("OOH OH! I don't know what that means :/ ");
+                }
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            } catch (KoyaException e) {
+                System.out.println(e);
             }
 
         }
