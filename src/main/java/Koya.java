@@ -13,11 +13,9 @@ public class Koya {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello! I'm Koya");
-
         String input;
         Scanner in = new Scanner(System.in);
-        System.out.println("What can I do for you?");
+        printIntroMessage();
 
         while (true) {
             input = in.nextLine();
@@ -47,8 +45,8 @@ public class Koya {
                 //Parsing index to obtain description and by
                 int dividerPosition = input.indexOf(" /by ");
 
-                String description = input.substring(9, dividerPosition);
-                String by = input.substring(dividerPosition + 5);
+                String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
+                String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
                 list[taskCount] = new Deadline(description, by);
                 confirmAddTask(list);
@@ -73,9 +71,14 @@ public class Koya {
         System.out.println("Bye Bye! See you soon!");
     }
 
-    private static void confirmMarkDone(Task list) {
+    private static void printIntroMessage() {
+        System.out.println("Hello! I'm Koya");
+        System.out.println("What can I do for you?");
+    }
+
+    private static void confirmMarkDone(Task task) {
         System.out.println("Nice! I've marked this as done:");
-        System.out.println(list.toString());
+        System.out.println(task.toString());
     }
 
     private static void listTasks(Task[] list) {
