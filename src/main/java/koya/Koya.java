@@ -1,6 +1,7 @@
 package koya;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import koya.task.Deadline;
 import koya.task.Event;
@@ -10,8 +11,7 @@ import koya.task.ToDo;
 public class Koya {
 
     private static int taskCount = 0;
-    private static final int MAX_TASKS = 100;
-    private static Task[] list = new Task[MAX_TASKS];
+    private static ArrayList<Task> list = new ArrayList<>();
     private static final int TODO_CHAR_COUNT = 5;
 
 
@@ -37,8 +37,8 @@ public class Koya {
                     int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
                     //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
 
-                    list[taskIndex].markAsDone();
-                    confirmMarkDone(list[taskIndex]);
+                    list.get(taskIndex).markAsDone();
+                    confirmMarkDone(list.get(taskIndex));
 
                 } else if (input.startsWith("todo")) {
 
@@ -47,7 +47,7 @@ public class Koya {
                     }
 
                     String description = input.substring(5);
-                    list[taskCount] = new ToDo(description);
+                    list.add(new ToDo(description));
                     confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
@@ -58,8 +58,9 @@ public class Koya {
                     String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
                     String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
-                    list[taskCount] = new Deadline(description, by);
+                    list.add(new Deadline(description, by));
                     confirmAddTask(list);
+                    taskCount++;
 
                 } else if (input.startsWith("event")) {
                     //index to obtain description, from and to
@@ -70,7 +71,7 @@ public class Koya {
                     String from = input.substring(fromDividerPosition + 7, toDividerPosition);
                     String to = input.substring(toDividerPosition + 5);
 
-                    list[taskCount] = new Event(description, from, to);
+                    list.add(new Event(description, from, to));
                     confirmAddTask(list);
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");
@@ -96,15 +97,17 @@ public class Koya {
         System.out.println(task.toString());
     }
 
-    private static void listTasks(Task[] list) {
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println((i + 1) + ". " + " " + list[i].toString());
+    private static void listTasks(ArrayList<Task> list) {
+        int taskIndex = 0;
+        for (Task task : list) {
+            System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
+            taskIndex++;
         }
     }
 
-    private static void confirmAddTask(Task[] list) {
+    private static void confirmAddTask(ArrayList<Task> list) {
         System.out.println("Got it. I've added this task:");
-        System.out.println(list[taskCount].toString());
+        System.out.println(list.get(taskCount).toString());
         taskCount++;
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
