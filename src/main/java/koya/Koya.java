@@ -60,7 +60,7 @@ public class Koya {
 
                     list.add(new Deadline(description, by));
                     confirmAddTask(list);
-                    taskCount++;
+
 
                 } else if (input.startsWith("event")) {
                     //index to obtain description, from and to
@@ -73,6 +73,15 @@ public class Koya {
 
                     list.add(new Event(description, from, to));
                     confirmAddTask(list);
+
+                } else if (input.startsWith("delete")) {
+                    //indexes to obtain number next to delete
+                    int spaceIndex = input.indexOf(" ");
+                    int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
+                    //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
+
+                    removeTask(taskIndex);
+
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");
                 }
@@ -85,6 +94,18 @@ public class Koya {
         }
 
         System.out.println("Bye Bye! See you soon!");
+    }
+
+    private static void removeTask(int taskIndex) {
+        Task removedTask = list.remove(taskIndex);
+        taskCount--;
+        confirmRemoveTask(removedTask);
+    }
+
+    private static void confirmRemoveTask(Task removedTask) {
+        System.out.println("Noted! I've removed this task:");
+        System.out.println(" " + removedTask.toString());
+        System.out.println("You only have " + taskCount + " tasks in your list");
     }
 
     private static void printIntroMessage() {
@@ -107,7 +128,7 @@ public class Koya {
 
     private static void confirmAddTask(ArrayList<Task> list) {
         System.out.println("Got it. I've added this task:");
-        System.out.println(list.get(taskCount).toString());
+        System.out.println(" " + list.get(taskCount).toString());
         taskCount++;
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
