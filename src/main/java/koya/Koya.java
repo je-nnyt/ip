@@ -115,6 +115,11 @@ public class Koya {
                     String to = input.substring(toDividerPosition + 5);
 
                     list[taskCount] = new Event(description, from, to);
+                    try {
+                        appendToFile(FILE_PATH,list[taskCount]);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     confirmAddTask(list);
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");

@@ -38,15 +38,17 @@ public class Task {
         String taskType = parts[0].trim();
         String taskDescription = parts[2].trim();
         boolean isTaskDone = parts[1].equals("1");
-        String taskBy = parts.length > 3 ?  parts[3].trim() : " ";
+        String taskByOrFrom = parts.length > 3 ?  parts[3].trim() : " ";
+        String taskTo = parts.length > 4 ? parts[4].trim() : " ";
+
 
         switch (taskType) {
         case "T":
             return new ToDo(taskDescription, isTaskDone);
         case "D":
-            return new Deadline(taskDescription, taskBy, isTaskDone);
-//        case "E":
-//            return new Event(taskDescription, parts[2].trim(), isTaskDone);
+            return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
+        case "E":
+            return new Event(taskDescription, taskByOrFrom,taskTo, isTaskDone);
         default:
             throw new IllegalArgumentException("Invalid Task");
         }
