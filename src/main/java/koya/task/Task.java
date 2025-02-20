@@ -26,32 +26,34 @@ public class Task {
     }
 
     public String toTextFile() {
-        if (this.isDone) {
-            return getTaskTypeIcon() + " | " + "1" + description;
-        } else {
-            return getTaskTypeIcon() + " | " + "0" + " | " + description;
-        }
+        return getTaskTypeIcon() + " | " + (this.isDone ? "1" : "0") + " | " + description;
     }
 
-    public static Task loadTaskToList(String line) {
-        String[] parts = line.split("\\|");
+public static Task loadTaskToList(String line) {
+    String[] parts = line.split("\\|");
 
-        String taskType = parts[0].trim();
-        boolean isTaskDone = parts[1].equals("1");
-        String taskDescription = parts[2].trim();
-        String taskByOrFrom = parts.length > 3 ? parts[3].trim() : " ";
-        String taskTo = parts.length > 4 ? parts[4].trim() : " ";
+    String taskType = parts[0].trim();
+    if(parts[0].isEmpty()){
 
+    }
+    boolean isTaskDone = parts[1].equals("1");
+    String taskDescription = parts[2].trim();
+    String taskByOrFrom = parts.length > 3 ? parts[3].trim() : " ";
+    // if array length >3, then a Deadline or Event must have been parsed
+    String taskTo = parts.length > 4 ? parts[4].trim() : " ";
+    // if array length >4, then an Event must have been parsed
 
-        switch (taskType) {
-        case "T":
-            return new ToDo(taskDescription, isTaskDone);
-        case "D":
-            return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
-        case "E":
-            return new Event(taskDescription, taskByOrFrom, taskTo, isTaskDone);
-        default:
-            throw new IllegalArgumentException("Invalid Task");
+    switch (taskType) {
+    case "T":
+        return new ToDo(taskDescription, isTaskDone);
+    case "D":
+        return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
+    case "E":
+        return new Event(taskDescription, taskByOrFrom, taskTo, isTaskDone);
+
+    default:
+        throw new IllegalArgumentException("Invalid Task");
         }
     }
 }
+
