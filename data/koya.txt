@@ -1,0 +1,7 @@
+T | 0 | something
+D | 0 | ok | tonight
+E | 0 | hey | 3pm | 6pm
+T | 0 | nothing
+D | 0 | ok | tonight
+E | 0 | tonight | 2 pm | 3pm
+T | 0 | something

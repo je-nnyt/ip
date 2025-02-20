@@ -22,6 +22,36 @@ public class Task {
     }
 
     public String toString() {
-        return getTaskTypeIcon() + getStatusIcon() + " " + description;
+        return "[" + getTaskTypeIcon() + "]" + getStatusIcon() + " " + description;
+    }
+
+    public String toTextFile() {
+        if (this.isDone) {
+            return getTaskTypeIcon() + " | " + "1" + description;
+        } else {
+            return getTaskTypeIcon() + " | " + "0" + " | " + description;
+        }
+    }
+
+    public static Task loadTaskToList(String line) {
+        String[] parts = line.split("\\|");
+
+        String taskType = parts[0].trim();
+        boolean isTaskDone = parts[1].equals("1");
+        String taskDescription = parts[2].trim();
+        String taskByOrFrom = parts.length > 3 ? parts[3].trim() : " ";
+        String taskTo = parts.length > 4 ? parts[4].trim() : " ";
+
+
+        switch (taskType) {
+        case "T":
+            return new ToDo(taskDescription, isTaskDone);
+        case "D":
+            return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
+        case "E":
+            return new Event(taskDescription, taskByOrFrom, taskTo, isTaskDone);
+        default:
+            throw new IllegalArgumentException("Invalid Task");
+        }
     }
 }

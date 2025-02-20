@@ -1,8 +1,12 @@
 package koya;
 
+import static koya.task.Task.loadTaskToList;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
-
 import koya.task.Deadline;
 import koya.task.Event;
 import koya.task.Task;
@@ -13,13 +17,42 @@ public class Koya {
     private static int taskCount = 0;
     private static ArrayList<Task> list = new ArrayList<>();
     private static final int TODO_CHAR_COUNT = 5;
-
+    private static final String FOLDER_PATH = "data";
+    private static final String FILE_PATH = "./data/koya.txt";
 
     public static void main(String[] args) {
 
         String input;
         Scanner in = new Scanner(System.in);
         printIntroMessage();
+
+        //check if folder exists
+        File folder = new File(FOLDER_PATH);
+        try {
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        //create or load task
+        File file = new File(FILE_PATH);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            } else {
+                Scanner s = new Scanner(file);
+                while (s.hasNext()) {
+                    taskCount++;
+                    String line = s.nextLine().trim();
+                    list.add(loadTaskToList(line));
+
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         while (true) {
             try {
@@ -48,6 +81,11 @@ public class Koya {
 
                     String description = input.substring(5);
                     list.add(new ToDo(description));
+                    try {
+                        appendToFile(FILE_PATH, list.get(taskCount));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
@@ -59,6 +97,11 @@ public class Koya {
                     String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
                     list.add(new Deadline(description, by));
+                    try {
+                        appendToFile(FILE_PATH, list.get(taskCount));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     confirmAddTask(list);
 
 
@@ -72,6 +115,11 @@ public class Koya {
                     String to = input.substring(toDividerPosition + 5);
 
                     list.add(new Event(description, from, to));
+                    try {
+                        appendToFile(FILE_PATH, list.get(taskCount));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
@@ -131,6 +179,12 @@ public class Koya {
         System.out.println(" " + list.get(taskCount).toString());
         taskCount++;
         System.out.println("Now you have " + taskCount + " tasks in the list.");
+    }
+
+    private static void appendToFile(String filePath, Task taskToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        fw.write(taskToAdd.toTextFile() + "\n");
+        fw.close();
     }
 }
 

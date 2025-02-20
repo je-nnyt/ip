@@ -6,9 +6,14 @@ public class ToDo extends Task {
         super(description);
     }
 
+    public ToDo(String description, Boolean isTaskDone) {
+        super(description);
+        this.isDone = isTaskDone;
+    }
+
     @Override
     public String getTaskTypeIcon() {
-        return "[T]";
+        return "T";
     }
 
     @Override
