@@ -31,7 +31,6 @@ public class Task {
         } else {
             return getTaskTypeIcon() + " | " + "0" + " | " + description;
         }
-
     }
 
     public static Task loadTaskToList(String line) {
@@ -39,12 +38,13 @@ public class Task {
         String taskType = parts[0].trim();
         String taskDescription = parts[2].trim();
         boolean isTaskDone = parts[1].equals("1");
+        String taskBy = parts.length > 3 ?  parts[3].trim() : " ";
 
         switch (taskType) {
         case "T":
             return new ToDo(taskDescription, isTaskDone);
-//        case "D":
-//            return new Deadline(taskDescription, parts[2].trim(), isTaskDone);
+        case "D":
+            return new Deadline(taskDescription, taskBy, isTaskDone);
 //        case "E":
 //            return new Event(taskDescription, parts[2].trim(), isTaskDone);
         default:
@@ -54,4 +54,5 @@ public class Task {
 }
 
 // "T | 1 | description"
-// par
+// D | 0 | return book | June 6th
+// E | 0 | project meeting | Aug 6th 2-4pm

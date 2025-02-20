@@ -9,6 +9,12 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public Deadline(String description, String byDeadline, Boolean isTaskDone){
+        super(description);
+        this.by = byDeadline;
+        this.isDone=isTaskDone;
+    }
+
     @Override
     public String getTaskTypeIcon() {
         return "D";
@@ -19,4 +25,9 @@ public class Deadline extends Task {
         return super.toString() + " (by: " + by + ")";
     }
 
+    @Override
+    public String toTextFile(){
+        return super.toTextFile() + " | " + by;
+    }
+// D | 0 | return book | June 6th
 }

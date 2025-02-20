@@ -1,3 +1,0 @@
-T | 0 | something
-T | 0 | nothing
-T | 0 | a thing
