@@ -83,9 +83,9 @@ public class Koya {
                     confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
-
                     int taskIndex = getTaskIndex(input);
                     removeTask(taskIndex);
+
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");
                 }
