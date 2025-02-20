@@ -28,8 +28,9 @@ public class Event extends Task {
         return super.toString() +
                 " (from: " + from + " to: " + to + ")";
     }
+
     @Override
-    public String toTextFile(){
+    public String toTextFile() {
         return super.toTextFile() + " | " + from + " | " + to;
     }
 }

@@ -3,7 +3,6 @@ package koya;
 import static koya.task.Task.loadTaskToList;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.Scanner;
@@ -31,7 +30,7 @@ public class Koya {
         //check if folder exists
         File folder = new File(FOLDER_PATH);
         try {
-            if (!folder.exists()){
+            if (!folder.exists()) {
                 folder.mkdirs();
             }
         } catch (Exception e) {
@@ -39,15 +38,15 @@ public class Koya {
         }
 
         //create or load task
-        File file = new File (FILE_PATH);
+        File file = new File(FILE_PATH);
         try {
-            if (!file.exists() ) {
+            if (!file.exists()) {
                 file.createNewFile();
             } else {
                 Scanner s = new Scanner(file);
-                while (s.hasNext()){
+                while (s.hasNext()) {
                     String line = s.nextLine().trim();
-                    list[taskCount]=loadTaskToList(line);
+                    list[taskCount] = loadTaskToList(line);
                     taskCount++;
                 }
             }
@@ -83,7 +82,7 @@ public class Koya {
                     String description = input.substring(5);
                     list[taskCount] = new ToDo(description);
                     try {
-                        appendToFile(FILE_PATH,list[taskCount]);
+                        appendToFile(FILE_PATH, list[taskCount]);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -99,7 +98,7 @@ public class Koya {
 
                     list[taskCount] = new Deadline(description, by);
                     try {
-                        appendToFile(FILE_PATH,list[taskCount]);
+                        appendToFile(FILE_PATH, list[taskCount]);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -116,7 +115,7 @@ public class Koya {
 
                     list[taskCount] = new Event(description, from, to);
                     try {
-                        appendToFile(FILE_PATH,list[taskCount]);
+                        appendToFile(FILE_PATH, list[taskCount]);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -158,11 +157,10 @@ public class Koya {
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 
-    private static void appendToFile (String filePath, Task taskToAdd) throws IOException{
-        FileWriter fw = new FileWriter(filePath,true);
+    private static void appendToFile(String filePath, Task taskToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
         fw.write(taskToAdd.toTextFile() + "\n");
         fw.close();
-
     }
 }
 

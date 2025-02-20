@@ -6,9 +6,9 @@ public class ToDo extends Task {
         super(description);
     }
 
-    public ToDo(String description, Boolean isTaskDone ) {
+    public ToDo(String description, Boolean isTaskDone) {
         super(description);
-        this.isDone=isTaskDone;
+        this.isDone = isTaskDone;
     }
 
     @Override

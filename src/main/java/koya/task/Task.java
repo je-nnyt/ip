@@ -35,10 +35,11 @@ public class Task {
 
     public static Task loadTaskToList(String line) {
         String[] parts = line.split("\\|");
+
         String taskType = parts[0].trim();
         String taskDescription = parts[2].trim();
         boolean isTaskDone = parts[1].equals("1");
-        String taskByOrFrom = parts.length > 3 ?  parts[3].trim() : " ";
+        String taskByOrFrom = parts.length > 3 ? parts[3].trim() : " ";
         String taskTo = parts.length > 4 ? parts[4].trim() : " ";
 
 
@@ -48,13 +49,9 @@ public class Task {
         case "D":
             return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
         case "E":
-            return new Event(taskDescription, taskByOrFrom,taskTo, isTaskDone);
+            return new Event(taskDescription, taskByOrFrom, taskTo, isTaskDone);
         default:
             throw new IllegalArgumentException("Invalid Task");
         }
     }
 }
-
-// "T | 1 | description"
-// D | 0 | return book | June 6th
-// E | 0 | project meeting | Aug 6th 2-4pm

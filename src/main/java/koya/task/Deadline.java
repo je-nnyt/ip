@@ -29,5 +29,4 @@ public class Deadline extends Task {
     public String toTextFile(){
         return super.toTextFile() + " | " + by;
     }
-// D | 0 | return book | June 6th
 }
