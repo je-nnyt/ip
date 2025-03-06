@@ -1,10 +1,5 @@
 package koya;
 
-import static koya.task.Task.loadTaskToList;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,10 +11,8 @@ import koya.task.ToDo;
 public class Koya {
 
     public static int taskCount = 0;
-    private static ArrayList<Task> list = new ArrayList<>();
+    public static ArrayList<Task> list = new ArrayList<>();
     private static final int TODO_CHAR_COUNT = 5;
-    private static final String FOLDER_PATH = "data";
-    private static final String FILE_PATH = "./data/koya.txt";
 
     public static void main(String[] args) {
 
@@ -28,9 +21,9 @@ public class Koya {
 
         UI.printIntroMessage();
         //check if folder exists
-        checkFolderExists();
+        Storage.checkFolderExists();
         //create or load task
-        createLoadFile();
+        Storage.createLoadFile();
 
         while (true) {
             try {
@@ -48,7 +41,7 @@ public class Koya {
 
                     list.get(taskIndex).markAsDone();
                     UI.confirmMarkDone(list.get(taskIndex));
-                    updateFile();
+                    Storage.updateFile();
 
                 } else if (input.startsWith("todo")) {
 
@@ -100,14 +93,6 @@ public class Koya {
         System.out.println("Bye Bye! See you soon!");
     }
 
-    private static void updateFile() {
-        try {
-            rewriteFile(FILE_PATH);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static int getTaskIndex(String input) {
         //indexes to obtain number next to delete
         int spaceIndex = input.indexOf(" ");
@@ -119,7 +104,7 @@ public class Koya {
     private static void addToListEvent(String description, String from, String to) {
         list.add(new Event(description, from, to));
         try {
-            appendToFile(FILE_PATH, list.get(taskCount));
+            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -128,7 +113,7 @@ public class Koya {
     private static void addToListDeadline(String description, String by) {
         list.add(new Deadline(description, by));
         try {
-            appendToFile(FILE_PATH, list.get(taskCount));
+            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -138,40 +123,8 @@ public class Koya {
         String description = input.substring(5);
         list.add(new ToDo(description));
         try {
-            appendToFile(FILE_PATH, list.get(taskCount));
+            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void checkFolderExists() {
-        File folder = new File(FOLDER_PATH);
-        try {
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void createLoadFile() {
-        File file = new File(FILE_PATH);
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                Scanner s = new Scanner(file);
-                while (s.hasNextLine()) {
-                    String line = s.nextLine().trim();
-                    if(line.isEmpty()){
-                        continue;
-                    }
-                    list.add(loadTaskToList(line));
-                    taskCount++;
-                }
-            }
-        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -180,7 +133,7 @@ public class Koya {
         Task removedTask = list.remove(taskIndex);
         taskCount--;
         UI.confirmRemoveTask(removedTask);
-        updateFile();
+        Storage.updateFile();
     }
 
     private static void listTasks(ArrayList<Task> list) {
@@ -189,17 +142,5 @@ public class Koya {
             System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
             taskIndex++;
         }
-    }
-    private static void appendToFile(String filePath, Task taskToAdd) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
-        fw.write(taskToAdd.toTextFile() + "\n");
-        fw.close();
-    }
-    private static void rewriteFile (String filePath) throws IOException{
-        FileWriter fw = new FileWriter(filePath);
-        for (Task task : list) {
-            fw.write(task.toTextFile() + "\n");
-        }
-        fw.close();
     }
 }
