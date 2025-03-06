@@ -1,3 +1,7 @@
 T | 1 | homework
-E | 1 | diner with friends | 5pm | 9pm
-D | 1 | iP project | Sunday
+T | 0 | cs2113
+T | 0 | homeword
+T | 0 | Assignment
+T | 0 | homework
+D | 0 | homework | Monday
+E | 0 | homework | null | null

@@ -58,4 +58,22 @@ public class TaskList {
             throw new RuntimeException(e);
         }
     }
+
+    public static void findMatchingTask(String input) {
+        int findDividerPosition = 5; //find takes 5 char
+
+        ArrayList<Task> matchingTaskList = new ArrayList<>();
+        for (Task task : Koya.list) {
+            if (task.getDescription().equals(input.substring(findDividerPosition))) {
+                matchingTaskList.add(task);
+            }
+        }
+        if (matchingTaskList.size() > 0) {
+            System.out.println("Here are the matching tasks in your list:");
+            listTasks(matchingTaskList);
+        } else {
+            System.out.println("No matching tasks in your list.");
+        }
+
+    }
 }
