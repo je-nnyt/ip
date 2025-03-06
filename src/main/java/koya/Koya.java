@@ -50,7 +50,7 @@ public class Koya {
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
-                    parser.parseDeadline(input);
+                    parser = parser.parseDeadline(input);
 
                     TaskList.addToListDeadline(parser.description, parser.by);
                     Ui.confirmAddTask(list);
@@ -65,6 +65,8 @@ public class Koya {
                     int taskIndex = TaskList.getTaskIndex(input);
                     TaskList.removeTask(taskIndex);
 
+                } else if (input.startsWith("find")) {
+                    TaskList.findMatchingTask(input);
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");
                 }
