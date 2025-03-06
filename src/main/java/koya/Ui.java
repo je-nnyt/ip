@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import koya.task.Task;
 
-public class UI {
+public class Ui {
     public static void confirmRemoveTask(Task removedTask) {
         System.out.println("Noted! I've removed this task:");
         System.out.println(" " + removedTask.toString());

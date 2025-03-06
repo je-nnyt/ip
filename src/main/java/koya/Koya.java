@@ -3,10 +3,7 @@ package koya;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import koya.task.Deadline;
-import koya.task.Event;
 import koya.task.Task;
-import koya.task.ToDo;
 
 public class Koya {
 
@@ -19,7 +16,7 @@ public class Koya {
         String input;
         Scanner in = new Scanner(System.in);
 
-        UI.printIntroMessage();
+        Ui.printIntroMessage();
         //check if folder exists
         Storage.checkFolderExists();
         //create or load task
@@ -33,14 +30,14 @@ public class Koya {
                     break;
                 } else if (input.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
-                    listTasks(list);
+                    TaskList.listTasks(list);
 
                 } else if (input.startsWith("mark")) {
                     //obtain number next to mark
-                    int taskIndex = getTaskIndex(input);
+                    int taskIndex = TaskList.getTaskIndex(input);
 
                     list.get(taskIndex).markAsDone();
-                    UI.confirmMarkDone(list.get(taskIndex));
+                    Ui.confirmMarkDone(list.get(taskIndex));
                     Storage.updateFile();
 
                 } else if (input.startsWith("todo")) {
@@ -48,8 +45,8 @@ public class Koya {
                     if (input.length() <= TODO_CHAR_COUNT) {
                         throw new KoyaException("OOH OH! The description of a todo cannot be left empty...");
                     }
-                    addToListToDo(input);
-                    UI.confirmAddTask(list);
+                    TaskList.addToListToDo(input);
+                    Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
 
@@ -59,8 +56,8 @@ public class Koya {
                     String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
                     String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
-                    addToListDeadline(description, by);
-                    UI.confirmAddTask(list);
+                    TaskList.addToListDeadline(description, by);
+                    Ui.confirmAddTask(list);
 
 
                 } else if (input.startsWith("event")) {
@@ -72,12 +69,12 @@ public class Koya {
                     String from = input.substring(fromDividerPosition + 7, toDividerPosition);
                     String to = input.substring(toDividerPosition + 5);
 
-                    addToListEvent(description, from, to);
-                    UI.confirmAddTask(list);
+                    TaskList.addToListEvent(description, from, to);
+                    Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
-                    int taskIndex = getTaskIndex(input);
-                    removeTask(taskIndex);
+                    int taskIndex = TaskList.getTaskIndex(input);
+                    TaskList.removeTask(taskIndex);
 
                 } else {
                     throw new KoyaException("OOH OH! I don't know what that means :/ ");
@@ -93,54 +90,4 @@ public class Koya {
         System.out.println("Bye Bye! See you soon!");
     }
 
-    private static int getTaskIndex(String input) {
-        //indexes to obtain number next to delete
-        int spaceIndex = input.indexOf(" ");
-        int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
-        //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
-        return taskIndex;
-    }
-
-    private static void addToListEvent(String description, String from, String to) {
-        list.add(new Event(description, from, to));
-        try {
-            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void addToListDeadline(String description, String by) {
-        list.add(new Deadline(description, by));
-        try {
-            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void addToListToDo(String input) {
-        String description = input.substring(5);
-        list.add(new ToDo(description));
-        try {
-            Storage.appendToFile(Storage.FILE_PATH, list.get(taskCount));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void removeTask(int taskIndex) {
-        Task removedTask = list.remove(taskIndex);
-        taskCount--;
-        UI.confirmRemoveTask(removedTask);
-        Storage.updateFile();
-    }
-
-    private static void listTasks(ArrayList<Task> list) {
-        int taskIndex = 0;
-        for (Task task : list) {
-            System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
-            taskIndex++;
-        }
-    }
 }
