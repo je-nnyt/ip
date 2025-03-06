@@ -21,7 +21,7 @@ public class Storage {
         }
     }
 
-    public static void rewriteFile (String filePath) throws IOException{
+    public static void rewriteFile(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task task : Koya.list) {
             fw.write(task.toTextFile() + "\n");
@@ -44,7 +44,7 @@ public class Storage {
                 Scanner s = new Scanner(file);
                 while (s.hasNextLine()) {
                     String line = s.nextLine().trim();
-                    if(line.isEmpty()){
+                    if (line.isEmpty()) {
                         continue;
                     }
                     Koya.list.add(loadTaskToList(line));

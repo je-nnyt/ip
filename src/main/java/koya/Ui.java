@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import koya.task.Task;
 
+/**
+ * <code>Ui</code> contains all methods that interacts with the user such as
+ * printing the intro and the outro message, confirms that a task has been added and removed,
+ * and confirms that a task has been marked as done.
+ */
 public class Ui {
     public static void confirmRemoveTask(Task removedTask) {
         System.out.println("Noted! I've removed this task:");

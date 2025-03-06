@@ -1,5 +1,10 @@
 package koya.task;
 
+/**
+ * Represents an Event task. An <code>Event</code> object
+ * contains a description and the duration from its starting to its ending time
+ * e.g., <code>event from Monday 3PM to 5pm
+ */
 public class Event extends Task {
 
     protected String from;
