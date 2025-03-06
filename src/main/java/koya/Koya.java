@@ -15,7 +15,7 @@ import koya.task.ToDo;
 
 public class Koya {
 
-    private static int taskCount = 0;
+    public static int taskCount = 0;
     private static ArrayList<Task> list = new ArrayList<>();
     private static final int TODO_CHAR_COUNT = 5;
     private static final String FOLDER_PATH = "data";
@@ -25,8 +25,8 @@ public class Koya {
 
         String input;
         Scanner in = new Scanner(System.in);
-        
-        printIntroMessage();
+
+        UI.printIntroMessage();
         //check if folder exists
         checkFolderExists();
         //create or load task
@@ -47,7 +47,7 @@ public class Koya {
                     int taskIndex = getTaskIndex(input);
 
                     list.get(taskIndex).markAsDone();
-                    confirmMarkDone(list.get(taskIndex));
+                    UI.confirmMarkDone(list.get(taskIndex));
                     updateFile();
 
                 } else if (input.startsWith("todo")) {
@@ -56,7 +56,7 @@ public class Koya {
                         throw new KoyaException("OOH OH! The description of a todo cannot be left empty...");
                     }
                     addToListToDo(input);
-                    confirmAddTask(list);
+                    UI.confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
 
@@ -67,7 +67,7 @@ public class Koya {
                     String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
 
                     addToListDeadline(description, by);
-                    confirmAddTask(list);
+                    UI.confirmAddTask(list);
 
 
                 } else if (input.startsWith("event")) {
@@ -80,7 +80,7 @@ public class Koya {
                     String to = input.substring(toDividerPosition + 5);
 
                     addToListEvent(description, from, to);
-                    confirmAddTask(list);
+                    UI.confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
                     int taskIndex = getTaskIndex(input);
@@ -179,24 +179,8 @@ public class Koya {
     private static void removeTask(int taskIndex) {
         Task removedTask = list.remove(taskIndex);
         taskCount--;
-        confirmRemoveTask(removedTask);
+        UI.confirmRemoveTask(removedTask);
         updateFile();
-    }
-
-    private static void confirmRemoveTask(Task removedTask) {
-        System.out.println("Noted! I've removed this task:");
-        System.out.println(" " + removedTask.toString());
-        System.out.println("You only have " + taskCount + " tasks in your list");
-    }
-
-    private static void printIntroMessage() {
-        System.out.println("Hello! I'm Koya");
-        System.out.println("What can I do for you?");
-    }
-
-    private static void confirmMarkDone(Task task) {
-        System.out.println("Nice! I've marked this as done:");
-        System.out.println(task.toString());
     }
 
     private static void listTasks(ArrayList<Task> list) {
@@ -206,14 +190,6 @@ public class Koya {
             taskIndex++;
         }
     }
-
-    private static void confirmAddTask(ArrayList<Task> list) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println(" " + list.get(taskCount).toString());
-        taskCount++;
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-    }
-
     private static void appendToFile(String filePath, Task taskToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(taskToAdd.toTextFile() + "\n");
@@ -227,4 +203,3 @@ public class Koya {
         fw.close();
     }
 }
-
