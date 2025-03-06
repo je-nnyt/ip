@@ -1,5 +1,10 @@
 package koya.task;
 
+/**
+ * Represents a deadline task. A <code>Deadline</code> object
+ * contains a description and the date and/or time by which it should be completed
+ * e.g., <code>deadline by Monday 3PM</code>
+ */
 public class Deadline extends Task {
 
     protected String by;
@@ -9,10 +14,10 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    public Deadline(String description, String byDeadline, Boolean isTaskDone){
+    public Deadline(String description, String byDeadline, Boolean isTaskDone) {
         super(description);
         this.by = byDeadline;
-        this.isDone=isTaskDone;
+        this.isDone = isTaskDone;
     }
 
     @Override
@@ -26,7 +31,7 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String toTextFile(){
+    public String toTextFile() {
         return super.toTextFile() + " | " + by;
     }
 }

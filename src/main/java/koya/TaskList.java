@@ -7,6 +7,11 @@ import koya.task.Event;
 import koya.task.Task;
 import koya.task.ToDo;
 
+/**
+ * Contains all methods relevant to the tasks in a list, such as adding a Deadline, ToDo and Event
+ * to the list of task. It also allows to remove a task from the list, to list all the tasks
+ * and to retrieve the associated task's index.
+ */
 public class TaskList {
     public static void addToListDeadline(String description, String by) {
         Koya.list.add(new Deadline(description, by));
