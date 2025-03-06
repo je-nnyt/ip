@@ -10,6 +10,7 @@ public class Koya {
     public static int taskCount = 0;
     public static ArrayList<Task> list = new ArrayList<>();
     private static final int TODO_CHAR_COUNT = 5;
+    public static Parser parser = new Parser();
 
     public static void main(String[] args) {
 
@@ -21,6 +22,7 @@ public class Koya {
         Storage.checkFolderExists();
         //create or load task
         Storage.createLoadFile();
+
 
         while (true) {
             try {
@@ -41,7 +43,6 @@ public class Koya {
                     Storage.updateFile();
 
                 } else if (input.startsWith("todo")) {
-
                     if (input.length() <= TODO_CHAR_COUNT) {
                         throw new KoyaException("OOH OH! The description of a todo cannot be left empty...");
                     }
@@ -49,27 +50,15 @@ public class Koya {
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("deadline")) {
+                    parser.parseDeadline(input);
 
-                    //Parsing index to obtain description and by
-                    int dividerPosition = input.indexOf(" /by ");
-
-                    String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
-                    String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "
-
-                    TaskList.addToListDeadline(description, by);
+                    TaskList.addToListDeadline(parser.description, parser.by);
                     Ui.confirmAddTask(list);
 
-
                 } else if (input.startsWith("event")) {
-                    //index to obtain description, from and to
-                    int fromDividerPosition = input.indexOf(" /from ");
-                    int toDividerPosition = input.indexOf(" /to ");
+                    parser.parseEvent(input);
 
-                    String description = input.substring(6, fromDividerPosition);
-                    String from = input.substring(fromDividerPosition + 7, toDividerPosition);
-                    String to = input.substring(toDividerPosition + 5);
-
-                    TaskList.addToListEvent(description, from, to);
+                    TaskList.addToListEvent(parser.description, parser.from, parser.to);
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
@@ -86,8 +75,7 @@ public class Koya {
             }
 
         }
-
-        System.out.println("Bye Bye! See you soon!");
+        Ui.goodbyeMessage();
     }
 
 }

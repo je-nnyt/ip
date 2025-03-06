@@ -27,4 +27,8 @@ public class Ui {
         Koya.taskCount++;
         System.out.println("Now you have " + Koya.taskCount + " tasks in the list.");
     }
+
+    static void goodbyeMessage() {
+        System.out.println("Bye Bye! See you soon!");
+    }
 }
