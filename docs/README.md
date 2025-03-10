@@ -1,8 +1,15 @@
 # Koya User Guide
 
-// Product screenshot goes here
-
 Koya is a personnal assistant chatbot that keeps track of the user's task via Command Line Interface (CLI)
+
+## Quick Start
+In order to use the chatbot, make sure to carefully follow the steps below:
+1. Have Java 17 installed on your laptop
+, you can verify the java version by running the following command in your terminal: java -version
+2. Download the .jar file
+4. Open a terminal and cd to where the .jar file is located
+5. Run the following command java -jar "JAR_FILE_NAME"
+6. Type the desired command in the command box (select any commands from the Features section below) and press enter
 
 ## Features
 Notes about the command format:
@@ -22,7 +29,9 @@ Example: deadline homework /by Monday 3PM
 // A description of the expected outcome goes here
 
 ```
-expected output
+Got it. I've added this task:
+ [D][ ] homework (by: Monday 3PM)
+Now you have 4 tasks in the list.
 ```
 
 ### Adding a todo: todo
@@ -92,14 +101,33 @@ Nice! I've marked this as done:
 
 List all task which has the given description
 
-format: find DESCRIPTION
+Format: find DESCRIPTION
 
 Example: find homework
 
-// A description of the expected outcome goes here
 
 ```
-expected output
+Here are the matching tasks in your list:
+1.  [T][ ] read book
+2.  [D][ ] return book (by: June 6th)
+```
+
+### Exit the chatbot:  bye
+
+Exit the chatbot
+
+Format: bye
+
+Example: bye
+
+```
+list
+Here are the tasks in your list:
+1.  [E][X] gala (from: Monday 3PM to: Monday 6PM)
+2.  [T][ ] homework CS2113
+3.  [D][X] homework (by: Friday 14th)
+4.  [T][ ] read book
+5.  [D][ ] return book (by: June 6th)```
 ```
 
 ### Listing all the tasks from the list: list
@@ -110,8 +138,6 @@ Format: list
 
 Example: list
 
-// A description of the expected outcome goes here
-
 ```
-expected output
+bye
 ```
