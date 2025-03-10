@@ -1,5 +1,7 @@
 package koya.task;
 
+import java.util.ArrayList;
+
 /**
  * Represents a deadline task. A <code>Deadline</code> object
  * contains a description and the date and/or time by which it should be completed

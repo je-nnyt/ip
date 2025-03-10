@@ -56,7 +56,7 @@ public class Koya {
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("event")) {
-                    parser.parseEvent(input);
+                   parser=parser.parseEvent(input);
 
                     TaskList.addToListEvent(parser.description, parser.from, parser.to);
                     Ui.confirmAddTask(list);

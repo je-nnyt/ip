@@ -15,9 +15,8 @@ public class Parser {
         this.by = by;
     }
 
-    public Parser(String description, String by, String from, String to) {
+    public Parser(String description, String from, String to) {
         this.description = description;
-        this.by = by;
         this.from = from;
         this.to = to;
     }
@@ -41,7 +40,7 @@ public class Parser {
         String from = input.substring(fromDividerPosition + 7, toDividerPosition);
         String to = input.substring(toDividerPosition + 5);
 
-        return new Parser(description, by, from, to);
+        return new Parser(description, from, to);
     }
 
 

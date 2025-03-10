@@ -4,7 +4,6 @@ Koya is a personnal assistant chatbot that keeps track of the user's task via Co
 
 
 
-
 ## Features
 
 _**Adding a todo task: todo**_
