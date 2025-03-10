@@ -66,11 +66,14 @@ public class TaskList {
 
     public static void findMatchingTask(String input) {
         int findDividerPosition = 5; //find takes 5 char
-
         ArrayList<Task> matchingTaskList = new ArrayList<>();
+
         for (Task task : Koya.list) {
-            if (task.getDescription().equals(input.substring(findDividerPosition))) {
-                matchingTaskList.add(task);
+            String[] taskDescriptionSplit = task.getDescription().split(" ");
+            for (String words : taskDescriptionSplit) {
+                if (words.equals(input.substring(findDividerPosition))) {
+                    matchingTaskList.add(task);
+                }
             }
         }
         if (matchingTaskList.size() > 0) {
