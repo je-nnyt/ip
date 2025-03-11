@@ -1,6 +1,14 @@
 package koya;
 
 public class Parser {
+
+    public static final int DEADLINE_CHAR_COUNT = 9; // "deadline " has 6 char including spaces and '/'
+    public static final int EVENT_CHAR_COUNT = 6; // "event " has 6 char including spaces and '/'
+    public static final int FROM_CHAR_COUNT = 7; // " /from " has 7 char including spaces and '/'
+    public static final int TO_CHAR_COUNT = 5;
+    public static final int BY_CHAR_COUNT = 5;
+
+
     String description;
     String by;
     String from;
@@ -24,8 +32,8 @@ public class Parser {
     public Parser parseDeadline(String input) {
         int dividerPosition = input.indexOf(" /by ");
 
-        String description = input.substring(9, dividerPosition); // 9: 8 for deadline + 1 for the space
-        String by = input.substring(dividerPosition + 5); // 5 for the number of characters in " /by "}
+        String description = input.substring(DEADLINE_CHAR_COUNT, dividerPosition).trim(); // 9: 8 for deadline + 1 for the space
+        String by = input.substring(dividerPosition + BY_CHAR_COUNT).trim(); // 5 for the number of characters in " /by "}
 
         return new Parser(description, by);
     }
@@ -36,9 +44,9 @@ public class Parser {
         int fromDividerPosition = input.indexOf(" /from ");
         int toDividerPosition = input.indexOf(" /to ");
 
-        String description = input.substring(6, fromDividerPosition);
-        String from = input.substring(fromDividerPosition + 7, toDividerPosition);
-        String to = input.substring(toDividerPosition + 5);
+        String description = input.substring(EVENT_CHAR_COUNT, fromDividerPosition).trim();
+        String from = input.substring(fromDividerPosition + FROM_CHAR_COUNT, toDividerPosition).trim();
+        String to = input.substring(toDividerPosition + TO_CHAR_COUNT).trim();
 
         return new Parser(description, from, to);
     }

@@ -9,7 +9,7 @@ public class Koya {
 
     public static int taskCount = 0;
     public static ArrayList<Task> list = new ArrayList<>();
-    private static final int TODO_CHAR_COUNT = 5;
+    public static final int TODO_CHAR_COUNT = 5;
     public static Parser parser = new Parser();
 
     public static void main(String[] args) {
@@ -23,10 +23,9 @@ public class Koya {
         //create or load task
         Storage.createLoadFile();
 
-
         while (true) {
             try {
-                input = in.nextLine();
+                input = in.nextLine().trim();
 
                 if (input.equals("bye")) {
                     break;
@@ -35,7 +34,6 @@ public class Koya {
                     TaskList.listTasks(list);
 
                 } else if (input.startsWith("mark")) {
-                    //obtain number next to mark
                     int taskIndex = TaskList.getTaskIndex(input);
 
                     list.get(taskIndex).markAsDone();
@@ -56,14 +54,14 @@ public class Koya {
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("event")) {
-                   parser=parser.parseEvent(input);
+                    parser = parser.parseEvent(input);
 
                     TaskList.addToListEvent(parser.description, parser.from, parser.to);
                     Ui.confirmAddTask(list);
 
                 } else if (input.startsWith("delete")) {
                     int taskIndex = TaskList.getTaskIndex(input);
-                    TaskList.removeTask(taskIndex);
+                    TaskList.deleteTask(taskIndex);
 
                 } else if (input.startsWith("find")) {
                     TaskList.findMatchingTask(input);

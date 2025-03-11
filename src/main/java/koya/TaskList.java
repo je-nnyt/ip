@@ -22,7 +22,7 @@ public class TaskList {
         }
     }
 
-    public static void removeTask(int taskIndex) {
+    public static void deleteTask(int taskIndex) {
         Task removedTask = Koya.list.remove(taskIndex);
         Koya.taskCount--;
         Ui.confirmRemoveTask(removedTask);
@@ -50,7 +50,7 @@ public class TaskList {
     public static int getTaskIndex(String input) {
         //indexes to obtain number next to delete
         int spaceIndex = input.indexOf(" ");
-        int taskIndex = Integer.parseInt(input.substring(spaceIndex + 1)) - 1;
+        int taskIndex = Integer.parseInt(input.substring(spaceIndex).trim()) - 1;
         //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
         return taskIndex;
     }
@@ -76,6 +76,7 @@ public class TaskList {
                 }
             }
         }
+
         if (matchingTaskList.size() > 0) {
             System.out.println("Here are the matching tasks in your list:");
             listTasks(matchingTaskList);
@@ -84,4 +85,5 @@ public class TaskList {
         }
 
     }
+
 }
