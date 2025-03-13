@@ -5,10 +5,11 @@ Koya is a personnal assistant chatbot that keeps track of the user's task via Co
 ## Quick Start
 In order to use the chatbot, carefully follow the steps below:
 1. Have Java 17 installed on your laptop
-, you can verify the java version by running the following command in your terminal: java -version
+, you can verify the java version by running the following command in your terminal:
+``` java -version ```
 2. Download the .jar file
 4. Open a terminal and cd to where the .jar file is located
-5. Run the following command java -jar "JAR_FILE_NAME"
+5. Run the following command java ```-jar "JAR_FILE_NAME"```
 6. Type the desired command in the command box (select any commands from the Features section below) and press enter
 
 ## Features
@@ -107,6 +108,7 @@ Format: mark TASK_INDEX
 Example: mark 1
 
 ```
+mark 1
 Nice! I've marked this as done:
 [E][X] gala (from: Monday 3PM to: Monday 6PM)
 ```
@@ -138,4 +140,5 @@ Example: bye
 
 ```
 bye
+Bye Bye! See you soon!
 ```
