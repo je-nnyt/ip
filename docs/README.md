@@ -3,7 +3,7 @@
 Koya is a personnal assistant chatbot that keeps track of the user's task via Command Line Interface (CLI)
 
 ## Quick Start
-In order to use the chatbot, make sure to carefully follow the steps below:
+In order to use the chatbot, carefully follow the steps below:
 1. Have Java 17 installed on your laptop
 , you can verify the java version by running the following command in your terminal: java -version
 2. Download the .jar file
@@ -14,9 +14,12 @@ In order to use the chatbot, make sure to carefully follow the steps below:
 ## Features
 Notes about the command format:
 
-All parameters that must be input by the user are CAPITALIZED. Carefully follow the format for each feature.
+1. The program is case sensitive. Carefully follow the format for each features!
 
-e.g. deadline /by DESCRIPTION , DESCRIPTION is the parameter. The user may for instance input: deadline /by Monday 3PM
+2. All parameters that must be input by the user are CAPITALIZED. 
+
+    e.g. deadline /by DESCRIPTION , DESCRIPTION is the parameter. The user may for instance input: deadline /by Monday 3PM
+
 
 ### Adding a deadline: deadline
 
@@ -25,8 +28,6 @@ Adds a deadline task to the list
 Format: deadline /by DESCRIPTION
 
 Example: deadline homework /by Monday 3PM
-
-// A description of the expected outcome goes here
 
 ```
 Got it. I've added this task:
@@ -42,8 +43,6 @@ Format: todo DESCRIPTION
 
 Example: todo dishes 
 
-// A description of the expected outcome goes here
-
 ```
 todo dishes
 Got it. I've added this task:
@@ -58,13 +57,28 @@ Format: event DESCRIPTION /from START /to END
 
 Example: event gala /from Monday 3PM /to Monday 6PM
 
-// A description of the expected outcome goes here
-
 ```
 event gala /from Monday 3PM /to Monday 6PM
 Got it. I've added this task:
  [E][ ] gala (from: Monday 3PM to: Monday 6PM)
 Now you have 2 tasks in the list.
+```
+### Listing all the tasks from the list: list
+
+List all the tasks from the list and their respective index
+
+Format: list
+
+Example: list
+
+```
+list
+Here are the tasks in your list:
+1.  [E][X] gala (from: Monday 3PM to: Monday 6PM)
+2.  [T][ ] homework CS2113
+3.  [D][X] homework (by: Friday 14th)
+4.  [T][ ] read book
+5.  [D][ ] return book (by: June 6th)
 ```
 
 ### Deleting a task: delete
@@ -75,7 +89,7 @@ Format: remove TASK_INDEX
 
 Example: delete 1
 
-// A description of the expected outcome goes here
+Note: The task's index are automatically adjusted as a task gets deleted. To ensure one is referring to the right task index, perform the list command to view the task's index.
 
 ```
 delete 1
@@ -112,6 +126,7 @@ Here are the matching tasks in your list:
 2.  [D][ ] return book (by: June 6th)
 ```
 
+
 ### Exit the chatbot:  bye
 
 Exit the chatbot
@@ -119,24 +134,6 @@ Exit the chatbot
 Format: bye
 
 Example: bye
-
-```
-list
-Here are the tasks in your list:
-1.  [E][X] gala (from: Monday 3PM to: Monday 6PM)
-2.  [T][ ] homework CS2113
-3.  [D][X] homework (by: Friday 14th)
-4.  [T][ ] read book
-5.  [D][ ] return book (by: June 6th)```
-```
-
-### Listing all the tasks from the list: list
-
-List all the tasks from the list
-
-Format: list
-
-Example: list
 
 ```
 bye
