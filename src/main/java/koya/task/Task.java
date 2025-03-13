@@ -33,13 +33,10 @@ public class Task {
         return getTaskTypeIcon() + " | " + (this.isDone ? "1" : "0") + " | " + description;
     }
 
-    public static Task loadTaskToList(String line) {
-        String[] parts = line.split("\\|");
+    public static Task loadTaskToList(String task) {
+        String[] parts = task.split("\\|");
 
         String taskType = parts[0].trim();
-        if (parts[0].isEmpty()) {
-
-        }
         boolean isTaskDone = parts[1].trim().equals("1");
         String taskDescription = parts[2].trim();
         String taskByOrFrom = parts.length > 3 ? parts[3].trim() : " ";

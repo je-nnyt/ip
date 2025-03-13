@@ -1,5 +1,8 @@
 package koya;
 
+/**
+ * Contains the parsing methods of Event and Deadline task.
+ */
 public class Parser {
 
     public static final int DEADLINE_CHAR_COUNT = 9; // "deadline " has 6 char including spaces and '/'
@@ -50,6 +53,5 @@ public class Parser {
 
         return new Parser(description, from, to);
     }
-
 
 }

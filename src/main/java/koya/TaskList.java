@@ -1,5 +1,6 @@
 package koya;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import koya.task.Deadline;
@@ -8,8 +9,8 @@ import koya.task.Task;
 import koya.task.ToDo;
 
 /**
- * Contains all methods relevant to the tasks in a list, such as adding a Deadline, ToDo and Event
- * to the list of task. It also allows to remove a task from the list, to list all the tasks
+ * Contains all methods relevant to handling the tasks in a list, such as adding a Deadline, ToDo and Event
+ * to the list. It also allows to delete a task from the list, to list all the tasks
  * and to retrieve the associated task's index.
  */
 public class TaskList {
@@ -22,14 +23,18 @@ public class TaskList {
         }
     }
 
-    public static void deleteTask(int taskIndex) {
-        Task removedTask = Koya.list.remove(taskIndex);
-        Koya.taskCount--;
-        Ui.confirmRemoveTask(removedTask);
-        Storage.updateFile();
+    protected static void deleteTask(int taskIndex) throws KoyaException {
+        try {
+            Task removedTask = Koya.list.remove(taskIndex);
+            Koya.taskCount--;
+            Ui.confirmRemoveTask(removedTask);
+            Storage.updateFile();
+        } catch (IndexOutOfBoundsException e) {
+            throw new KoyaException("oops! Invalid Index...");
+        }
     }
 
-    public static void listTasks(ArrayList<Task> list) {
+    protected static void listTasks(ArrayList<Task> list) {
         int taskIndex = 0;
         for (Task task : list) {
             System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
@@ -37,25 +42,30 @@ public class TaskList {
         }
     }
 
-    public static void addToListToDo(String input) {
-        String description = input.substring(5);
-        Koya.list.add(new ToDo(description));
+    protected static void addToListToDo(String input) throws KoyaException {
         try {
+            String description = input.substring(5);
+            Koya.list.add(new ToDo(description));
+
             Storage.appendToFile(Storage.FILE_PATH, Koya.list.get(Koya.taskCount));
-        } catch (Exception e) {
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new KoyaException("OOH OH! The description of a todo cannot be left empty...");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static int getTaskIndex(String input) {
+    protected static int getTaskIndex(String input) {
         //indexes to obtain number next to delete
         int spaceIndex = input.indexOf(" ");
         int taskIndex = Integer.parseInt(input.substring(spaceIndex).trim()) - 1;
-        //-1 to adjust for zero-based index array (e.g. mark 2 should be at index 1 in the array)
+        //-1 to adjust for zero-based index array
+        // (e.g. mark 2 should be at index 1 in the array)
         return taskIndex;
     }
 
-    public static void addToListEvent(String description, String from, String to) {
+    protected static void addToListEvent(String description, String from, String to) {
         Koya.list.add(new Event(description, from, to));
         try {
             Storage.appendToFile(Storage.FILE_PATH, Koya.list.get(Koya.taskCount));
@@ -64,19 +74,21 @@ public class TaskList {
         }
     }
 
-    public static void findMatchingTask(String input) {
+    protected static void findMatchingTask(String input) {
         int findDividerPosition = 5; //find takes 5 char
         ArrayList<Task> matchingTaskList = new ArrayList<>();
 
+        //find matching tasks in the list
         for (Task task : Koya.list) {
             String[] taskDescriptionSplit = task.getDescription().split(" ");
+
             for (String words : taskDescriptionSplit) {
                 if (words.equals(input.substring(findDividerPosition))) {
                     matchingTaskList.add(task);
                 }
             }
         }
-
+        //print matching tasks
         if (matchingTaskList.size() > 0) {
             System.out.println("Here are the matching tasks in your list:");
             listTasks(matchingTaskList);
@@ -86,4 +98,11 @@ public class TaskList {
 
     }
 
+    protected static Task getTaskFromList(int taskIndex) throws KoyaException {
+        try {
+            return Koya.list.get(taskIndex);
+        } catch (IndexOutOfBoundsException e) {
+            throw new KoyaException("oops! Invalid index!");
+        }
+    }
 }

@@ -6,8 +6,8 @@ import koya.task.Task;
 
 /**
  * <code>Ui</code> contains all methods that interacts with the user such as
- * printing the intro and the outro message, confirms that a task has been added and removed,
- * and confirms that a task has been marked as done.
+ * printing the intro and the outro message, confirms that a task has been added, removed,
+ * and marked as done.
  */
 public class Ui {
     public static void confirmRemoveTask(Task removedTask) {

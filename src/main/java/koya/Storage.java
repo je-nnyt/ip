@@ -3,6 +3,7 @@ package koya;
 import static koya.task.Task.loadTaskToList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -37,33 +38,38 @@ public class Storage {
 
     public static void createLoadFile() {
         File file = new File(FILE_PATH);
-        try {
-            if (!file.exists()) {
+        checkFolderExists();
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
-            } else {
-                Scanner s = new Scanner(file);
-                while (s.hasNextLine()) {
-                    String line = s.nextLine().trim();
-                    if (line.isEmpty()) {
-                        continue;
-                    }
-                    Koya.list.add(loadTaskToList(line));
-                    Koya.taskCount++;
-                }
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to create file " + FILE_PATH);
             }
-        } catch (IOException e) {
+        }
+        loadTaskFromFile(file);
+    }
+
+    private static void loadTaskFromFile(File file) {
+        Scanner s = null;
+        try {
+            s = new Scanner(file);
+            while (s.hasNextLine()) {
+                String line = s.nextLine().trim();
+                if (line.isEmpty()) {
+                    continue;
+                }
+                Koya.list.add(loadTaskToList(line));
+                Koya.taskCount++;
+            }
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void checkFolderExists() {
         File folder = new File(FOLDER_PATH);
-        try {
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new RuntimeException("Unable to create folder " + FOLDER_PATH);
         }
     }
 }
