@@ -121,6 +121,7 @@ Example: find homework
 
 
 ```
+find book
 Here are the matching tasks in your list:
 1.  [T][ ] read book
 2.  [D][ ] return book (by: June 6th)

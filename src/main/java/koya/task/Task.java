@@ -51,9 +51,8 @@ public class Task {
             return new Deadline(taskDescription, taskByOrFrom, isTaskDone);
         case "E":
             return new Event(taskDescription, taskByOrFrom, taskTo, isTaskDone);
-
         default:
-            throw new IllegalArgumentException("Invalid Task");
+            throw new IllegalArgumentException("Unknown task type: " + taskType);
         }
     }
 }
