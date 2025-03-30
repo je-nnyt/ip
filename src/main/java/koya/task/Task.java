@@ -29,10 +29,16 @@ public class Task {
         return "[" + getTaskTypeIcon() + "]" + getStatusIcon() + " " + description;
     }
 
+    /**
+     * Prints the information of a given task onto the text file
+     */
     public String toTextFile() {
         return getTaskTypeIcon() + " | " + (this.isDone ? "1" : "0") + " | " + description;
     }
 
+    /**
+     * Loads all the tasks from the text file into the program
+     */
     public static Task loadTaskToList(String task) {
         String[] parts = task.split("\\|");
 

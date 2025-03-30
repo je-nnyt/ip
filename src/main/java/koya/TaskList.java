@@ -14,6 +14,11 @@ import koya.task.ToDo;
  * and to retrieve the associated task's index.
  */
 public class TaskList {
+    /**
+     * This method adds a Deadline to the list of task found in the text file
+     * @param description Description of the Deadline
+     * @param by By duration of the Deadline
+     */
     public static void addToListDeadline(String description, String by) {
         Koya.list.add(new Deadline(description, by));
         try {
@@ -23,6 +28,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * This method deletes the task associated to the index
+     * from the list of task found in the text file
+     * @param taskIndex TaskIndex of the associated task
+     * @throws KoyaException If the index are out of bounds
+     */
     protected static void deleteTask(int taskIndex) throws KoyaException {
         try {
             Task removedTask = Koya.list.remove(taskIndex);
@@ -34,6 +45,10 @@ public class TaskList {
         }
     }
 
+    /**
+     * This method lists all the tasks from the list of task
+     * @param list List of tasks
+     */
     protected static void listTasks(ArrayList<Task> list) {
         int taskIndex = 0;
         for (Task task : list) {

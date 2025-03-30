@@ -10,10 +10,19 @@ import java.util.Scanner;
 
 import koya.task.Task;
 
+/**
+ * This class contains all relevant methods to storing, updating and deleting data from
+ * a text file.
+ */
+
 public class Storage {
     static final String FOLDER_PATH = "data";
     static final String FILE_PATH = "./data/koya.txt";
 
+    /**
+     * This method updates the text file with the new information added.
+     * by rewriting the whole text file.
+     */
     public static void updateFile() {
         try {
             rewriteFile(FILE_PATH);
@@ -22,6 +31,10 @@ public class Storage {
         }
     }
 
+    /**
+     * This method updates rewrites the text file
+     * @param filePath filePath
+     */
     public static void rewriteFile(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task task : Koya.list) {
@@ -30,12 +43,21 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * This method appends the new task's information  at the end of the text file
+     * @param filePath File path
+     * @param taskToAdd Task to add to file
+     */
     public static void appendToFile(String filePath, Task taskToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(taskToAdd.toTextFile() + "\n");
         fw.close();
     }
 
+    /**
+     * This method creates a file or load the tasks from the file into the program,
+     * depending on whether the file exists.
+     */
     public static void createLoadFile() {
         File file = new File(FILE_PATH);
         checkFolderExists();
@@ -49,6 +71,10 @@ public class Storage {
         loadTaskFromFile(file);
     }
 
+    /**
+     * This method loads all the task from the text file to the program.
+     * @param file File storing the information
+     */
     private static void loadTaskFromFile(File file) {
         Scanner s = null;
         try {
@@ -66,6 +92,10 @@ public class Storage {
         }
     }
 
+    /**
+     * This method verifies whether a folder exists and creates one if none exists
+     * @throws RuntimeException If unable to create a folder
+     */
     public static void checkFolderExists() {
         File folder = new File(FOLDER_PATH);
         if (!folder.exists() && !folder.mkdirs()) {

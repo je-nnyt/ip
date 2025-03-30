@@ -32,6 +32,12 @@ public class Parser {
         this.to = to;
     }
 
+    /**
+     * This method returns a Parser object containing the description, "by" deadline of
+     * a Deadline input by the user
+     * @param input String input by the user
+     * @return Parser Parser
+     */
     public Parser parseDeadline(String input) {
         int dividerPosition = input.indexOf(" /by ");
 
@@ -41,6 +47,12 @@ public class Parser {
         return new Parser(description, by);
     }
 
+    /**
+     * This method returns a Parser object containing the description, "from" and "to" date of
+     * an Event input by the user.
+     * @param input String input by the user
+     * @return Parser Parser
+     */
     public Parser parseEvent(String input) {
 
         //index to obtain description, from and to
