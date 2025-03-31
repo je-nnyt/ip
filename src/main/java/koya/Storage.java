@@ -33,7 +33,7 @@ public class Storage {
     /**
      * This method rewrites the text file
      *
-     * @param filePath filePath
+     * @param filePath File path
      */
     public static void rewriteFile(String filePath) throws IOException {
         FileWriter fw = new FileWriter(filePath);

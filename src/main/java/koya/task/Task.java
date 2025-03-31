@@ -22,14 +22,14 @@ public class Task {
     }
 
     /**
-     * This method returns the task type icon
+     * This method returns the task type icon.
      */
     public String getTaskTypeIcon() {
         return " ";//leave empty, overridden by subclass
     }
 
     /**
-     * This method sets the isDone as true to mark a task as done
+     * This method sets the isDone as true to mark a task as done.
      */
     public void markAsDone() {
         this.isDone = true;

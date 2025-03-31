@@ -34,10 +34,10 @@ public class Parser {
 
     /**
      * This method returns a Parser object containing the description, "by" deadline of
-     * a Deadline input by the user
+     * a Deadline task
      *
      * @param input String input by the user
-     * @return Parser Parser
+     * @return Parser
      */
     public Parser parseDeadline(String input) throws KoyaException {
         try {
@@ -57,7 +57,7 @@ public class Parser {
      * an Event input by the user.
      *
      * @param input String input by the user
-     * @return Parser Parser
+     * @return Parser
      */
     public Parser parseEvent(String input) throws KoyaException {
 
