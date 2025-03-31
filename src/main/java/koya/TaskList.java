@@ -7,6 +7,7 @@ import koya.task.Deadline;
 import koya.task.Event;
 import koya.task.Task;
 import koya.task.ToDo;
+import koya.Ui;
 
 /**
  * Contains all methods relevant to handling the tasks in a list, such as adding a Deadline, ToDo and Event
@@ -48,7 +49,7 @@ public class TaskList {
     }
 
     /**
-     * This method lists all the tasks from the list of task
+     * This method prints all the tasks from the list of task
      *
      * @param list List of tasks
      */
@@ -58,6 +59,7 @@ public class TaskList {
             System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
             taskIndex++;
         }
+        Ui.dashedLine();
     }
 
     /**
@@ -121,7 +123,9 @@ public class TaskList {
      * @throws KoyaException if no keyword is found in the input string
      */
     protected static void findMatchingTask(String input) throws KoyaException {
+
         ArrayList<Task> matchingTaskList = null;
+
         try {
             int findDividerPosition = 5; //find takes 5 char
             matchingTaskList = new ArrayList<>();
@@ -131,24 +135,27 @@ public class TaskList {
                 //split the description and store each words in the array
                 String[] taskDescriptionSplit = task.getDescription().split(" ");
 
-                findMatchingKeyword(input, task, taskDescriptionSplit, findDividerPosition, matchingTaskList);
+                findMatchingKeyword(input, task, taskDescriptionSplit,
+                        findDividerPosition, matchingTaskList);
             }
         } catch (Exception e) {
             throw new KoyaException("OOH! Invalid format");
         }
 
-
         //print matching tasks
         if (matchingTaskList.size() > 0) {
             System.out.println("Here are the matching tasks in your list:");
             listTasks(matchingTaskList);
+            Ui.dashedLine();
         } else {
             System.out.println("No matching tasks in your list.");
+            Ui.dashedLine();
         }
 
     }
 
-    private static void findMatchingKeyword(String input, Task task, String[] taskDescriptionSplit, int findDividerPosition, ArrayList<Task> matchingTaskList) {
+    private static void findMatchingKeyword(String input, Task task, String[] taskDescriptionSplit,
+                                            int findDividerPosition, ArrayList<Task> matchingTaskList) {
         for (String words : taskDescriptionSplit) {
             if (words.equals(input.substring(findDividerPosition))) {
                 matchingTaskList.add(task);

@@ -15,7 +15,7 @@ public class Ui {
      * This method prints a dashed line for clarity purposes.
      */
     public static void dashedLine() {
-        System.out.println("\n"+ "------------------------------------------");
+        System.out.println("------------------------------------------" + "\n");
     }
 
     /**
