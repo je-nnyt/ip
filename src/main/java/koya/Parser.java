@@ -43,8 +43,8 @@ public class Parser {
         try {
             int dividerPosition = input.indexOf(" /by ");
 
-            String description = input.substring(DEADLINE_CHAR_COUNT, dividerPosition).trim(); // 9: 8 for deadline + 1 for the space
-            String by = input.substring(dividerPosition + BY_CHAR_COUNT).trim(); // 5 for the number of characters in " /by "}
+            String description = input.substring(DEADLINE_CHAR_COUNT, dividerPosition).trim();
+            String by = input.substring(dividerPosition + BY_CHAR_COUNT).trim();
 
             return new Parser(description, by);
         } catch (Exception e) {

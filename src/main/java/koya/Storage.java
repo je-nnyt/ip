@@ -20,8 +20,7 @@ public class Storage {
     static final String FILE_PATH = "./data/koya.txt";
 
     /**
-     * This method updates the text file with the new information added.
-     * by rewriting the whole text file.
+     * This method updates the text file with the new information added
      */
     public static void updateFile() {
         try {
@@ -32,7 +31,7 @@ public class Storage {
     }
 
     /**
-     * This method updates rewrites the text file
+     * This method rewrites the text file
      *
      * @param filePath filePath
      */
@@ -58,7 +57,7 @@ public class Storage {
 
     /**
      * This method creates a file or load the tasks from the file into the program,
-     * depending on whether the file exists.
+     * depending on whether the file exists or not.
      */
     public static void createLoadFile() {
         File file = new File(FILE_PATH);
