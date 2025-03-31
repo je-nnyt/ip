@@ -37,7 +37,8 @@ public class Task {
     }
 
     /**
-     * Loads all the tasks from the text file into the program
+     * Loads the task from the text file into the program
+     * @param task Task to load from the file to the program
      */
     public static Task loadTaskToList(String task) {
         String[] parts = task.split("\\|");

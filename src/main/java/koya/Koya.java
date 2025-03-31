@@ -5,13 +5,20 @@ import java.util.ArrayList;
 
 import koya.task.Task;
 
-
+/**
+ * This is the main class for the Koya personal chatbot program.
+ * This program manages a list of Tasks (Todo, Event, Deadline) and features functionalities
+ * such as adding, deleting and marking a task.
+ */
 public class Koya {
 
     public static int taskCount = 0;
     protected static ArrayList<Task> list = new ArrayList<>();
     public static Parser parser = new Parser();
 
+    /**
+     * This is the main method where the Koya chatbot program is run.
+     */
     public static void main(String[] args) {
 
         String input;

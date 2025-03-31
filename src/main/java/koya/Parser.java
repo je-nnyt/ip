@@ -38,13 +38,17 @@ public class Parser {
      * @param input String input by the user
      * @return Parser Parser
      */
-    public Parser parseDeadline(String input) {
-        int dividerPosition = input.indexOf(" /by ");
+    public Parser parseDeadline(String input) throws KoyaException {
+        try {
+            int dividerPosition = input.indexOf(" /by ");
 
-        String description = input.substring(DEADLINE_CHAR_COUNT, dividerPosition).trim(); // 9: 8 for deadline + 1 for the space
-        String by = input.substring(dividerPosition + BY_CHAR_COUNT).trim(); // 5 for the number of characters in " /by "}
+            String description = input.substring(DEADLINE_CHAR_COUNT, dividerPosition).trim(); // 9: 8 for deadline + 1 for the space
+            String by = input.substring(dividerPosition + BY_CHAR_COUNT).trim(); // 5 for the number of characters in " /by "}
 
-        return new Parser(description, by);
+            return new Parser(description, by);
+        } catch (Exception e) {
+            throw new KoyaException("OOH! Invalid format");
+        }
     }
 
     /**
@@ -53,17 +57,21 @@ public class Parser {
      * @param input String input by the user
      * @return Parser Parser
      */
-    public Parser parseEvent(String input) {
+    public Parser parseEvent(String input) throws KoyaException {
 
-        //index to obtain description, from and to
-        int fromDividerPosition = input.indexOf(" /from ");
-        int toDividerPosition = input.indexOf(" /to ");
+        try {
+            //index to obtain description, from and to
+            int fromDividerPosition = input.indexOf(" /from ");
+            int toDividerPosition = input.indexOf(" /to ");
 
-        String description = input.substring(EVENT_CHAR_COUNT, fromDividerPosition).trim();
-        String from = input.substring(fromDividerPosition + FROM_CHAR_COUNT, toDividerPosition).trim();
-        String to = input.substring(toDividerPosition + TO_CHAR_COUNT).trim();
+            String description = input.substring(EVENT_CHAR_COUNT, fromDividerPosition).trim();
+            String from = input.substring(fromDividerPosition + FROM_CHAR_COUNT, toDividerPosition).trim();
+            String to = input.substring(toDividerPosition + TO_CHAR_COUNT).trim();
 
-        return new Parser(description, from, to);
+            return new Parser(description, from, to);
+        } catch (Exception e) {
+            throw new KoyaException("OHH! Invalid format");
+        }
     }
 
 }
