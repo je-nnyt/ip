@@ -16,8 +16,9 @@ import koya.task.ToDo;
 public class TaskList {
     /**
      * This method adds a Deadline to the list of task found in the text file
+     *
      * @param description Description of the Deadline
-     * @param by By duration of the Deadline
+     * @param by          By duration of the Deadline
      */
     public static void addToListDeadline(String description, String by) {
         Koya.list.add(new Deadline(description, by));
@@ -31,6 +32,7 @@ public class TaskList {
     /**
      * This method deletes the task associated to the index
      * from the list of task found in the text file
+     *
      * @param taskIndex TaskIndex of the associated task
      * @throws KoyaException If the index are out of bounds
      */
@@ -47,6 +49,7 @@ public class TaskList {
 
     /**
      * This method lists all the tasks from the list of task
+     *
      * @param list List of tasks
      */
     protected static void listTasks(ArrayList<Task> list) {
@@ -57,6 +60,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * This method adds a ToDo to the list of task from the text file
+     *
+     * @param input Input String describing the ToDo task
+     */
     protected static void addToListToDo(String input) throws KoyaException {
         try {
             String description = input.substring(5);
@@ -71,15 +79,32 @@ public class TaskList {
         }
     }
 
-    protected static int getTaskIndex(String input) {
-        //indexes to obtain number next to delete
-        int spaceIndex = input.indexOf(" ");
-        int taskIndex = Integer.parseInt(input.substring(spaceIndex).trim()) - 1;
-        //-1 to adjust for zero-based index array
-        // (e.g. mark 2 should be at index 1 in the array)
-        return taskIndex;
+    /**
+     * This method parses the input and returns the task index
+     *
+     * @param input Input String containing the task index
+     * @return Index of the task to be deleted
+     */
+    protected static int getTaskIndex(String input) throws KoyaException {
+        try {
+            //indexes to obtain number next to delete
+            int spaceIndex = input.indexOf(" ");
+            int taskIndex = Integer.parseInt(input.substring(spaceIndex).trim()) - 1;
+            //-1 to adjust for zero-based index array
+            // (e.g. mark 2 should be at index 1 in the array)
+            return taskIndex;
+        } catch (Exception e) {
+            throw new KoyaException("OOH! Invalid task index");
+        }
     }
 
+    /**
+     * This method adds an Event to the list of task from the text file
+     *
+     * @param description Description of the event
+     * @param from        Starting time of the event
+     * @param to          Ending time of the event
+     */
     protected static void addToListEvent(String description, String from, String to) {
         Koya.list.add(new Event(description, from, to));
         try {
@@ -89,20 +114,30 @@ public class TaskList {
         }
     }
 
-    protected static void findMatchingTask(String input) {
-        int findDividerPosition = 5; //find takes 5 char
-        ArrayList<Task> matchingTaskList = new ArrayList<>();
+    /**
+     * This method finds all tasks with matching keyword and prints them
+     *
+     * @param input Input desired keyword
+     * @throws KoyaException if no keyword is found in the input string
+     */
+    protected static void findMatchingTask(String input) throws KoyaException {
+        ArrayList<Task> matchingTaskList = null;
+        try {
+            int findDividerPosition = 5; //find takes 5 char
+            matchingTaskList = new ArrayList<>();
 
-        //find matching tasks in the list
-        for (Task task : Koya.list) {
-            String[] taskDescriptionSplit = task.getDescription().split(" ");
+            //find matching tasks in the list
+            for (Task task : Koya.list) {
+                //split the description and store each words in the array
+                String[] taskDescriptionSplit = task.getDescription().split(" ");
 
-            for (String words : taskDescriptionSplit) {
-                if (words.equals(input.substring(findDividerPosition))) {
-                    matchingTaskList.add(task);
-                }
+                findMatchingKeyword(input, task, taskDescriptionSplit, findDividerPosition, matchingTaskList);
             }
+        } catch (Exception e) {
+            throw new KoyaException("OOH! Invalid format");
         }
+
+
         //print matching tasks
         if (matchingTaskList.size() > 0) {
             System.out.println("Here are the matching tasks in your list:");
@@ -113,6 +148,20 @@ public class TaskList {
 
     }
 
+    private static void findMatchingKeyword(String input, Task task, String[] taskDescriptionSplit, int findDividerPosition, ArrayList<Task> matchingTaskList) {
+        for (String words : taskDescriptionSplit) {
+            if (words.equals(input.substring(findDividerPosition))) {
+                matchingTaskList.add(task);
+            }
+        }
+    }
+
+    /**
+     * This method returns the task at a given index.
+     *
+     * @param taskIndex Index of the associated task to retrieve from the list
+     * @return Task
+     */
     protected static Task getTaskFromList(int taskIndex) throws KoyaException {
         try {
             return Koya.list.get(taskIndex);
