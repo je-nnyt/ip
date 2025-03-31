@@ -36,7 +36,6 @@ public class Koya {
                     break;
 
                 } else if (input.equals("list")) {
-                    System.out.println("Here are the tasks in your list:");
                     TaskList.listTasks(list);
 
                 } else if (input.startsWith("mark")) {

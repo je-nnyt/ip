@@ -28,6 +28,7 @@ public class TaskList {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     /**
@@ -54,6 +55,7 @@ public class TaskList {
      * @param list List of tasks
      */
     protected static void listTasks(ArrayList<Task> list) {
+        Ui.listMessage();
         int taskIndex = 0;
         for (Task task : list) {
             System.out.println((taskIndex + 1) + ". " + " " + list.get(taskIndex));
@@ -144,12 +146,9 @@ public class TaskList {
 
         //print matching tasks
         if (matchingTaskList.size() > 0) {
-            System.out.println("Here are the matching tasks in your list:");
-            listTasks(matchingTaskList);
-            Ui.dashedLine();
+            Ui.printMatchingTaskList(matchingTaskList);
         } else {
-            System.out.println("No matching tasks in your list.");
-            Ui.dashedLine();
+            Ui.printNoMatchingTask();
         }
 
     }
