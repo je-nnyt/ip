@@ -33,6 +33,7 @@ public class Storage {
 
     /**
      * This method updates rewrites the text file
+     *
      * @param filePath filePath
      */
     public static void rewriteFile(String filePath) throws IOException {
@@ -45,7 +46,8 @@ public class Storage {
 
     /**
      * This method appends the new task's information  at the end of the text file
-     * @param filePath File path
+     *
+     * @param filePath  File path
      * @param taskToAdd Task to add to file
      */
     public static void appendToFile(String filePath, Task taskToAdd) throws IOException {
@@ -73,6 +75,7 @@ public class Storage {
 
     /**
      * This method loads all the task from the text file to the program.
+     *
      * @param file File storing the information
      */
     private static void loadTaskFromFile(File file) {
@@ -94,6 +97,7 @@ public class Storage {
 
     /**
      * This method verifies whether a folder exists and creates one if none exists
+     *
      * @throws RuntimeException If unable to create a folder
      */
     public static void checkFolderExists() {

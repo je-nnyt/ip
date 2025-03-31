@@ -35,6 +35,7 @@ public class Parser {
     /**
      * This method returns a Parser object containing the description, "by" deadline of
      * a Deadline input by the user
+     *
      * @param input String input by the user
      * @return Parser Parser
      */
@@ -54,6 +55,7 @@ public class Parser {
     /**
      * This method returns a Parser object containing the description, "from" and "to" date of
      * an Event input by the user.
+     *
      * @param input String input by the user
      * @return Parser Parser
      */
